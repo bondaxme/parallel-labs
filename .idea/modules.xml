@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Kryvoruk/Kryvoruk.iml" filepath="$PROJECT_DIR$/Kryvoruk/Kryvoruk.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lab1/Lab1.iml" filepath="$PROJECT_DIR$/Lab1/Lab1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Lab2/Lab2.iml" filepath="$PROJECT_DIR$/Lab2/Lab2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lab3/Lab3.iml" filepath="$PROJECT_DIR$/Lab3/Lab3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Zhmailo/Zhmailo.iml" filepath="$PROJECT_DIR$/Zhmailo/Zhmailo.iml" />
       <module fileurl="file://$PROJECT_DIR$/parallel labs.iml" filepath="$PROJECT_DIR$/parallel labs.iml" />
     </modules>
   </component>
