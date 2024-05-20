@@ -1,34 +1,59 @@
 public class ParallelFox {
-    private final int numThreads;
-    private final int blockSize;
     private final Matrix A;
     private final Matrix B;
     private final Result result;
+    private final int numThreads;
+    private final int blockSize;
 
     public ParallelFox(Matrix A, Matrix B, int numThreads) {
-        this.numThreads = numThreads;
-        this.blockSize = A.getRows() / numThreads;
         this.A = A;
         this.B = B;
         this.result = new Result(A.getRows(), B.getCols());
+        this.numThreads = numThreads;
+        this.blockSize = A.getRows() / (int) Math.sqrt(numThreads);
     }
 
     private class WorkerThread extends Thread {
-        private final int rowStart, rowEnd, colStart, colEnd;
+        private final int rowStart;
+        private final int colStart;
 
-        public WorkerThread(int rowStart, int rowEnd, int colStart, int colEnd) {
+        public WorkerThread(int rowStart, int colStart) {
             this.rowStart = rowStart;
-            this.rowEnd = rowEnd;
             this.colStart = colStart;
-            this.colEnd = colEnd;
         }
 
         @Override
         public void run() {
-            for (int i = rowStart; i < rowEnd; i++) {
-                for (int j = colStart; j < colEnd; j++) {
-                    for (int k = 0; k < A.getCols(); k++) {
-                        result.set(i, j, result.get(i, j) + A.get(i, k) * B.get(k, j));
+            for (int l = 0; l < numThreads; l++) {
+                int k = (colStart + l) % numThreads;
+                Matrix A_block = A.getSubMatrix(rowStart, k * blockSize, blockSize);
+                Matrix B_block = B.getSubMatrix(k * blockSize, colStart, blockSize);
+
+                for (int i = 0; i < blockSize; i++) {
+                    for (int j = 0; j < blockSize; j++) {
+                        int sum = 0;
+                        for (int m = 0; m < blockSize; m++) {
+                            sum += A_block.get(i, m) * B_block.get(m, j);
+                        }
+                        synchronized (result) {
+                            result.set(rowStart + i, colStart + j, result.get(rowStart + i, colStart + j) + sum);
+                        }
+                    }
+                }
+            }
+
+            // Обробка залишкових рядків і стовпців
+            int remainder = A.getRows() % blockSize;
+            if (remainder > 0) {
+                for (int i = rowStart; i < rowStart + remainder; i++) {
+                    for (int j = colStart; j < colStart + remainder; j++) {
+                        int sum = 0;
+                        for (int k = 0; k < A.getCols(); k++) {
+                            sum += A.get(i, k) * B.get(k, j);
+                        }
+                        synchronized (result) {
+                            result.set(i, j, result.get(i, j) + sum);
+                        }
                     }
                 }
             }
@@ -36,24 +61,20 @@ public class ParallelFox {
     }
 
     public Result multiply() throws InterruptedException {
-        Thread[][] threads = new Thread[numThreads][numThreads];
+        int sqrtThreads = (int) Math.sqrt(numThreads);
+        Thread[] threads = new Thread[numThreads];
 
-        for (int i = 0; i < numThreads; i++) {
-            for (int j = 0; j < numThreads; j++) {
-                int rowStart = i * blockSize;
-                int rowEnd = rowStart + blockSize;
-                int colStart = j * blockSize;
-                int colEnd = colStart + blockSize;
-
-                threads[i][j] = new WorkerThread(rowStart, rowEnd, colStart, colEnd);
-                threads[i][j].start();
+        int threadIndex = 0;
+        for (int i = 0; i < sqrtThreads; i++) {
+            for (int j = 0; j < sqrtThreads; j++) {
+                threads[threadIndex] = new WorkerThread(i * blockSize, j * blockSize);
+                threads[threadIndex].start();
+                threadIndex++;
             }
         }
 
-        for (int i = 0; i < numThreads; i++) {
-            for (int j = 0; j < numThreads; j++) {
-                threads[i][j].join();
-            }
+        for (Thread thread : threads) {
+            thread.join();
         }
 
         return result;

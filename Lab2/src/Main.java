@@ -7,9 +7,20 @@ public class Main {
         System.out.println("Enter the number of threads: ");
         int numThreads = scanner.nextInt();
 
+
         int rows = 1000;
         int cols = 1000;
         int bound = 10;
+
+        if (Math.sqrt(numThreads) % 1 != 0) {
+            System.out.println("The number of threads must be a perfect square.");
+            return;
+        }
+
+        if (rows % numThreads != 0) {
+            System.out.println("Size of the matrices must be divisible by the square root of the number of threads.");
+            return;
+        }
 
         Matrix A = Matrix.generateRandomMatrix(rows, cols, bound);
         Matrix B = Matrix.generateRandomMatrix(rows, cols, bound);
@@ -24,10 +35,10 @@ public class Main {
             return;
         }
 
-        long startTime = System.currentTimeMillis();
-        Result sequentialResult = SequentialMultiplication.multiply(A, B);
-        long endTime = System.currentTimeMillis();
-        System.out.println("Sequential multiplication took " + (endTime - startTime) + " milliseconds.");
+//        long startTime = System.currentTimeMillis();
+//        Result sequentialResult = SequentialMultiplication.multiply(A, B);
+//        long endTime = System.currentTimeMillis();
+//        System.out.println("Sequential multiplication took " + (endTime - startTime) + " milliseconds.");
 
         long startTime2 = System.currentTimeMillis();
         Result parallelResult = StripedParallel.multiply(A, B, numThreads);
@@ -46,10 +57,16 @@ public class Main {
 //        System.out.println("Parallel Result:");
 //        parallelResult.print();
 
-        if (sequentialResult.equals(parallelResult)) {
-            System.out.println("The results are identical.");
-        } else {
-            System.out.println("The results differ.");
-        }
+//        if (sequentialResult.equals(parallelResult)) {
+//            System.out.println("The results of striped are identical.");
+//        } else {
+//            System.out.println("The results differ.");
+//        }
+//
+//        if (sequentialResult.equals(parallelFoxResult)) {
+//            System.out.println("The results of Fox are identical.");
+//        } else {
+//            System.out.println("The results differ.");
+//        }
     }
 }
