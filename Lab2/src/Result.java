@@ -13,6 +13,14 @@ public class Result {
         return data[row][col];
     }
 
+    public int getRows() {
+        return data.length;
+    }
+
+    public int getCols() {
+        return data[0].length;
+    }
+
     public void print() {
         for (int[] row : data) {
             for (int value : row) {

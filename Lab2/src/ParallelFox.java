@@ -24,14 +24,16 @@ public class ParallelFox {
             for (int j = 0; j < matrixB.getCols(); j += blockSize) {
                 threads[threadIndex] = new Thread(new FoxTask(i, j));
                 threads[threadIndex].start();
-                threadIndex++;
                 System.out.println("Thread " + threadIndex + " is working on rows " + i + " to " + (i + blockSize) + " and columns " + j + " to " + (j + blockSize));
+                threadIndex++;
             }
         }
 
         for (Thread thread : threads) {
-            if (thread != null) {
+            try {
                 thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -52,7 +54,7 @@ public class ParallelFox {
             for (int k = 0; k < matrixA.getRows(); k += blockSize) {
                 Matrix blockA = getBlock(matrixA, row, k, blockSize);
                 Matrix blockB = getBlock(matrixB, k, col, blockSize);
-                Matrix blockC = multiplyBlocks(blockA, blockB);
+                Result blockC = SequentialMultiplication.multiply(blockA, blockB);
 
                 addBlockToResult(blockC, row, col);
             }
@@ -73,25 +75,7 @@ public class ParallelFox {
         return block;
     }
 
-    private Matrix multiplyBlocks(Matrix blockA, Matrix blockB) {
-        int rows = blockA.getRows();
-        int cols = blockB.getCols();
-        Matrix resultBlock = new Matrix(rows, cols);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                int sum = 0;
-                for (int k = 0; k < blockA.getCols(); k++) {
-                    sum += blockA.get(i, k) * blockB.get(k, j);
-                }
-                resultBlock.set(i, j, sum);
-            }
-        }
-
-        return resultBlock;
-    }
-
-    private synchronized void addBlockToResult(Matrix block, int row, int col) {
+    private synchronized void addBlockToResult(Result block, int row, int col) {
         for (int i = 0; i < block.getRows(); i++) {
             for (int j = 0; j < block.getCols(); j++) {
                 result.set(row + i, col + j, result.get(row + i, col + j) + block.get(i, j));
