@@ -18,6 +18,7 @@ public class StripedParallel {
             final int endRow = (t == numThreads - 1) ? rowsA : startRow + rowsPerThread;
 
             threads[t] = new Thread(() -> {
+                System.out.println("Thread " + Thread.currentThread().getName() + " is working on rows " + startRow + " to " + endRow);
                 for (int i = startRow; i < endRow; i++) {
                     for (int j = 0; j < colsB; j++) {
                         int sum = 0;
@@ -26,7 +27,6 @@ public class StripedParallel {
                         }
                         result.set(i, j, sum);
                     }
-//                    System.out.println("Thread " + Thread.currentThread().getId() + " finished row " + i);
                 }
             });
             threads[t].start();

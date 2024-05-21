@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Random;
 
 public class Matrix {
@@ -45,23 +44,4 @@ public class Matrix {
 
         return matrix;
     }
-
-    public Matrix getSubMatrix(int rowStart, int colStart, int blockSize) {
-        Matrix subMatrix = new Matrix(blockSize, blockSize);
-        for (int i = 0; i < blockSize; i++) {
-            for (int j = 0; j < blockSize; j++) {
-                subMatrix.set(i, j, this.get(rowStart + i, colStart + j));
-            }
-        }
-        return subMatrix;
-    }
-
-    public void setSubMatrix(Matrix subMatrix, int rowStart, int colStart) {
-        for (int i = 0; i < subMatrix.getRows(); i++) {
-            for (int j = 0; j < subMatrix.getCols(); j++) {
-                this.set(rowStart + i, colStart + j, subMatrix.get(i, j));
-            }
-        }
-    }
-
 }

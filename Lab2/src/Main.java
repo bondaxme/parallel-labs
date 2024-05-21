@@ -17,11 +17,6 @@ public class Main {
             return;
         }
 
-        if (rows % numThreads != 0) {
-            System.out.println("Size of the matrices must be divisible by the square root of the number of threads.");
-            return;
-        }
-
         Matrix A = Matrix.generateRandomMatrix(rows, cols, bound);
         Matrix B = Matrix.generateRandomMatrix(rows, cols, bound);
 
@@ -51,7 +46,7 @@ public class Main {
         long endTime3 = System.currentTimeMillis();
         System.out.println("Parallel Fox multiplication took " + (endTime3 - startTime3) + " milliseconds.");
 
-
+//
 //        System.out.println("Sequential Result:");
 //        sequentialResult.print();
 //        System.out.println("Parallel Result:");
