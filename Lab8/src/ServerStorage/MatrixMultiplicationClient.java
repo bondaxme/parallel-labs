@@ -1,4 +1,4 @@
-package ServerSide;
+package ServerStorage;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,33 +12,32 @@ public class MatrixMultiplicationClient {
              ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
              ObjectInputStream input = new ObjectInputStream(socket.getInputStream())) {
 
-            // Генерація матриць на стороні клієнта
-            Matrix A = new Matrix(100, 100);
-            Matrix B = new Matrix(100, 100);
-            A.fillRandom();
-            B.fillRandom();
-            int numThreads = 2;
-
-            // Відправка запиту на сервер
-            MatrixMultiplicationRequest request = new MatrixMultiplicationRequest(A, B, numThreads);
+            int numThreads = 6;
 
             long startTime = System.currentTimeMillis();
+
+            MatrixMultiplicationRequest request = new MatrixMultiplicationRequest(numThreads);
+
             output.writeObject(request);
 
-            // Отримання результату від сервера
             Result result = (Result) input.readObject();
             long endTime = System.currentTimeMillis();
 
-            // Вивід результату
-            printMatrix(result.getData());
 
-            // Вивід часу виконання
+
+//            printMatrix(result.getData());
+
+            System.out.println("Server Storage");
+
+            System.out.println("Matrix size: " + result.getData().length + "x" + result.getData()[0].length);
+
             System.out.println("Time taken: " + (endTime - startTime) + " ms");
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
 
     private static void printMatrix(int[][] matrix) {
         for (int[] row : matrix) {

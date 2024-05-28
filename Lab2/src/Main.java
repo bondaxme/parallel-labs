@@ -10,6 +10,8 @@ public class Main {
         int rows = 1000;
         int cols = 1000;
         int bound = 10;
+//        int iter = 5;
+//        int warmup = 3;
 
         if (Math.sqrt(numThreads) % 1 != 0) {
             System.out.println("The number of threads must be a perfect square.");
@@ -45,6 +47,24 @@ public class Main {
         System.out.println("Sequential multiplication took " + (endTime - startTime) + " milliseconds.");
         System.out.println("Parallel multiplication took " + (endTime2 - startTime2) + " milliseconds.");
         System.out.println("Parallel Fox multiplication took " + (endTime3 - startTime3) + " milliseconds.");
+
+//        System.out.println("Starting warmup...");
+//        for (int i = 0; i < warmup; i++) {
+//            ParallelFox parallelFox = new ParallelFox(A, B, numThreads);
+//            Result parallelFoxResult = parallelFox.multiply();
+//        }
+//        System.out.println("Warmup complete.");
+//
+//        long totalTime = 0;
+//        for (int i = 0; i < iter; i++) {
+//            long startTime = System.currentTimeMillis();
+//            ParallelFox parallelFox = new ParallelFox(A, B, numThreads);
+//            Result parallelFoxResult = parallelFox.multiply();
+//            long endTime = System.currentTimeMillis();
+//            System.out.println("Fox multiplication took " + (endTime - startTime) + " milliseconds.");
+//            totalTime += (endTime - startTime);
+//        }
+//        System.out.println("Average time for Fox multiplication: " + totalTime / iter + " milliseconds.");
 
 
 //        System.out.println("Sequential Result:");

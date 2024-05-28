@@ -1,4 +1,4 @@
-package ClientSide;
+package ServerStorage;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -30,23 +30,18 @@ class ClientHandler extends Thread {
         try (ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
              ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream())) {
 
-            // Read the request from client
+            int size = 1500;
+
             MatrixMultiplicationRequest request = (MatrixMultiplicationRequest) input.readObject();
-            int rowsA = request.getRowsA();
-            int colsA = request.getColsA();
-            int colsB = request.getColsB();
             int numThreads = request.getNumThreads();
 
-            // Generate matrices on the server
-            Matrix A = new Matrix(rowsA, colsA);
-            Matrix B = new Matrix(colsA, colsB);
+            Matrix A = new Matrix(size, size);
+            Matrix B = new Matrix(size, size);
             A.fillRandom();
             B.fillRandom();
 
-            // Perform matrix multiplication
             Result result = StripedParallel.multiply(A, B, numThreads);
 
-            // Send the result back to the client
             output.writeObject(result);
 
         } catch (IOException | ClassNotFoundException | InterruptedException e) {

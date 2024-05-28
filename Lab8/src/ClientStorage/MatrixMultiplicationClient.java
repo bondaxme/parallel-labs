@@ -1,4 +1,4 @@
-package ClientSide;
+package ClientStorage;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,33 +12,42 @@ public class MatrixMultiplicationClient {
              ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
              ObjectInputStream input = new ObjectInputStream(socket.getInputStream())) {
 
-            // Параметри матриць і кількість потоків
-            int rowsA = 100;
-            int colsA = 100;
-            int colsB = 100;
-            int numThreads = 2;
-
-            // Відправка запиту на сервер для генерації матриць та їх множення
-            MatrixMultiplicationRequest request = new MatrixMultiplicationRequest(rowsA, colsA, colsB, numThreads);
+            int numThreads = 6;
 
             long startTime = System.currentTimeMillis();
+
+            int size = 500;
+
+            Matrix A = new Matrix(size, size);
+            Matrix B = new Matrix(size, size);
+            A.fillRandom();
+            B.fillRandom();
+
+            MatrixMultiplicationRequest request = new MatrixMultiplicationRequest(A, B, numThreads);
+
             output.writeObject(request);
 
-            // Отримання результату від сервера
             Result result = (Result) input.readObject();
             long endTime = System.currentTimeMillis();
 
-            // Вивід результату
-            printMatrix(result.getData());
+//            printMatrix(result.getData());
 
-            // Вивід часу виконання
+            Result result_seq = SequentialMultiplication.multiply(A, B);
+
+            System.out.println("Client Storage");
+
+            System.out.println("Matrix size: " + result.getData().length + "x" + result.getData()[0].length);
+
+            System.out.println("Are results equal: " + result_seq.areEqual(result));
+
+
+
             System.out.println("Time taken: " + (endTime - startTime) + " ms");
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-
 
     private static void printMatrix(int[][] matrix) {
         for (int[] row : matrix) {

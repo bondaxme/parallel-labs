@@ -1,4 +1,4 @@
-package ClientSide;
+package ServerStorage;
 
 import java.io.Serializable;
 
@@ -16,5 +16,6 @@ public class Result implements Serializable {
     public int[][] getData() {
         return data;
     }
+
 }
 

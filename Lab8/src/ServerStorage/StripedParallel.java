@@ -1,6 +1,4 @@
-package ServerSide;
-
-import java.io.Serializable;
+package ServerStorage;
 
 public class StripedParallel {
     public static Result multiply(Matrix A, Matrix B, int numThreads) throws InterruptedException {

@@ -1,4 +1,4 @@
-package ServerSide;
+package ClientStorage;
 
 import java.io.Serializable;
 

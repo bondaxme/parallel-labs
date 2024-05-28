@@ -1,4 +1,4 @@
-package ClientSide;
+package ClientStorage;
 
 public class StripedParallel {
     public static Result multiply(Matrix A, Matrix B, int numThreads) throws InterruptedException {
