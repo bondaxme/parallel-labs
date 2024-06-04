@@ -1,0 +1,370 @@
+1. Introduction to the Connexions Edition 
+2. Introduction to High Performance Computing 
+3. Modern Computer Architectures 
+1. Memory 
+1. Introduction 
+2. Memory Technology 
+3. Registers 
+4. Caches 
+5. Cache Organization 
+6. Virtual Memory 
+7. Improving Memory Performance 
+8. Closing Notes 
+9. Exercises 
+2. Floating-Point Numbers 
+. Introduction 
+. Reality 
+. Representation 
+. Effects of Floating-Point Representation 
+. More Algebra That Doesn't Work 
+. History of IEEE Floating-Point Format 
+. IEEE Operations 
+. Special Values 
+. Exceptions and Traps 
+. Compiler Issues 
+12. Closing Notes 
+13. Exercises 
+4. Programming and Tuning Software 
+1. What a Compiler Does 
+1. Introduction 
+2. History of Compilers 
+
+
+Pe 
+POOWOMNAUARWNPE 
+
+
+NID OF BR W 
+
+
+. Which Language To Optimize 
+. Optimizing Compiler Tour 
+
+. Optimization Levels 
+
+. Classical Optimizations 
+
+. Closing Notes 
+
+8. 
+
+
+Exercises 
+
+
+2. Timing and Profiling 
+
+
+NI 
+
+
+. Introduction 
+
+. Timing 
+
+. Subroutine Profiling 
+. Basic Block Profilers 
+. Virtual Memory 
+
+. Closing Notes 
+
+. Exercises 
+
+
+3. Eliminating Clutter 
+
+
+1. 
+. Subroutine Calls 
+
+. Branches 
+
+. Branches With Loops 
+. Other Clutter 
+
+. Closing Notes 
+
+ig 
+
+
+AUB WN 
+
+
+Introduction 
+
+
+Exercises 
+
+
+4. Loop Optimizations 
+
+
+1. 
+. Operation Counting 
+
+. Basic Loop Unrolling 
+
+. Qualifying Candidates for Loop Unrolling Up one 
+
+
+CONI OD UI 
+
+
+Introduction 
+
+
+level 
+
+
+. Nested Loops 
+
+. Loop Interchange 
+
+. Memory Access Patterns 
+
+. When Interchange Won't Work 
+
+
+9. Blocking to Ease Memory Access Patterns 
+10. Programs That Require More Memory Than You 
+Have 
+11. Closing Notes 
+12. Exercises 
+5. Shared-Memory Parallel Processors 
+1. Understanding Parallelism 
+1. Introduction 
+2. Dependencies 
+3. Loops 
+4. Loop-Carried Dependencies 
+5. Ambiguous References 
+6. Closing Notes 
+7. Exercises 
+2. Shared-Memory Multiprocessors 
+1. Introduction 
+2. Symmetric Multiprocessing Hardware 
+3. Multiprocessor Software Concepts 
+4. Techniques for Multithreaded Programs 
+5. A Real Example 
+6. Closing Notes 
+7. Exercises 
+3. Programming Shared-Memory Multiprocessors 
+1. Introduction 
+2. Automatic Parallelization 
+3. Assisting the Compiler 
+4. Closing Notes 
+o. Exercises 
+6. Scalable Parallel Processing 
+1. Language Support for Performance 
+1. Introduction 
+2. Data-Parallel Problem: Heat Flow 
+
+
+Auf WwW 
+
+
+. Explicity Parallel Languages 
+
+. FORTRAN 90 
+
+. Problem Decomposition 
+
+. High Performance FORTRAN (HPF) 
+iE 
+
+
+Closing Notes 
+
+
+2. Message-Passing Environments 
+
+
+1. 
+2. 
+3: 
+4. 
+
+
+Introduction 
+
+Parallel Virtual Machine 
+Message-Passing Interface 
+Closing Notes 
+
+
+7. Appendixes 
+1. Appendix C: High Performance Microprocessors 
+
+
+1. 
+. Why CISC? 
+
+. Fundamental of RISC 
+
+. Second-Generation RISC Processors 
+
+
+NOUR WD 
+
+
+Introduction 
+
+
+RISC Means Fast 
+
+
+. Out-of-Order Execution: The Post-RISC Architecture 
+. Closing Notes 
+8. 
+
+
+Exercises 
+
+
+2. Appendix B: Looking at Assembly Language 
+
+
+1. 
+
+
+Assembly Language 
+
+
+Introduction to the Connexions Edition 
+This provides an introduction to the Connexions republished version of the 
+book. 
+
+
+Introduction to the Connexions Edition 
+
+
+The purpose of this book has always been to teach new programmers and 
+scientists about the basics of High Performance Computing. Too many 
+parallel and high performance computing books focus on the architecture, 
+theory and computer science surrounding HPC. I wanted this book to speak 
+to the practicing Chemistry student, Physicist, or Biologist who need to 
+write and run their programs as part of their research. I was using the first 
+edition of the book written by Kevin Dowd in 1996 when I found out that 
+the book was going out of print. I immediately sent an angry letter to 
+O'Reilly customer support imploring them to keep the book going as it was 
+the only book of its kind in the marketplace. That complaint letter triggered 
+several conversations which let to me becoming the author of the second 
+edition. In true "open-source" fashion - since I complained about it - I got to 
+fix it. During Fall 1997, while I was using the book to teach my HPC 
+course, I re-wrote the book one chapter at a time, fueled by multiple late- 
+night lattes and the fear of not having anything ready for the weeks lecture. 
+
+
+The second edition came out in July 1998, and was pretty well received. I 
+got many good comments from teachers and scientists who felt that the 
+book did a good job of teaching the practitioner - which made me very 
+
+
+happy. 
+
+
+In 1998, this book was published at a crossroads in the history of High 
+Performance Computing. In the late 1990's there was still a question a to 
+whether the large vector supercomputers with their specialized memory 
+systems could resist the assault from the increasing clock rates of the 
+microprocessors. Also in the later 1990's there was a question whether the 
+fast, expensive, and power-hungry RISC architectures would win over the 
+commodity Intel microprocessors and commodity memory technologies. 
+
+
+By 2003, the market had decided that the commodity microprocessor was 
+king - its performance and the performance of commodity memory 
+
+
+subsystems kept increasing so rapidly. By 2006, the Intel architecture had 
+eliminated all the RISC architecture processors by greatly increasing clock 
+rate and truly winning the increasingly important Floating Point Operations 
+per Watt competition. Once users figured out how to effectively use loosely 
+coupled processors, overall cost and improving energy consumption of 
+commodity microprocessors became overriding factors in the market place. 
+
+
+These changes led to the book becoming less and less relevant to the 
+common use cases in the HPC field and led to the book going out of print - 
+much to the chagrin of its small but devoted fan base. I was reduced to 
+buying used copies of the book from Amazon in order to have a few copies 
+laying around the office to give as gifts to unsuspecting visitors. 
+
+
+Thanks the the forward-looking approach of O'Reilly and Associates to use 
+Founder's Copyright and releasing out-of-print books under Creative 
+Commons Attribution, this book once again rises from the ashes like the 
+proverbial Phoenix. By bringing this book to Connexions and publishing it 
+under a Creative Commons Attribution license we are insuring that the 
+book is never again obsolete. We can take the core elements of the book 
+which are still relevant and a new community of authors can add to and 
+adapt the book as needed over time. 
+
+
+Publishing through Connexions also keeps the cost of printed books very 
+low and so it will be a wise choice as a textbook for college courses in High 
+Performance Computing. The Creative Commons Licensing and the ability 
+to print locally can make this book available in any country and any school 
+in the world. Like Wikipedia, those of us who use the book can become the 
+volunteers who will help improve the book and become co-authors of the 
+book. 
+
+
+I need to thank Kevin Dowd who wrote the first edition and graciously let 
+me alter it from cover to cover in the second edition. Mike Loukides of 
+O'Reilly was the editor of both the first and second editions and we talk 
+from time to time about a possible future edition of the book. Mike was also 
+instrumental in helping to release the book from O'Reilly under Creative 
+Commons Attribution. The team at Connexions has been wonderful to work 
+with. We share a passion for High Performance Computing and new forms 
+of publishing so that the knowledge reaches as many people as possible. I 
+
+
+want to thank Jan Odegard and Kathi Fletcher for encouraging, supporting 
+and helping me through the re-publishing process. Daniel Williamson did 
+an amazing job of converting the materials from the O'Reilly formats to the 
+Connexions formats. 
+
+
+I truly look forward to seeing how far this book will go now that we can 
+have an unlimited number of co-authors to invest and then use the book. I 
+look forward to work with you all. 
+
+
+Charles Severance - November 12, 2009 
+
+
+Introduction to High Performance Computing 
+This is an introduction to the book High Performance Computing. 
+
+
+Why Worry About Performance? 
+
+
+Over the last decade, the definition of what is called high performance 
+computing has changed dramatically. In 1988, an article appeared in the 
+Wall Street Journal titled “Attack of the Killer Micros” that described how 
+computing systems made up of many small inexpensive processors would 
+soon make large supercomputers obsolete. At that time, a “personal 
+computer” costing $3000 could perform 0.25 million floating-point 
+operations per second, a “workstation” costing $20,000 could perform 3 
+million floating-point operations, and a supercomputer costing $3 million 
+could perform 100 million floating-point operations per second. Therefore, 
+why couldn’t we simply connect 400 personal computers together to 
+achieve the same performance of a supercomputer for $1.2 million? 
+
+
+This vision has come true in some ways, but not in the way the original 
+proponents of the “killer micro” theory envisioned. Instead, the 
+microprocessor performance has relentlessly gained on the supercomputer 
+performance. This has occurred for two reasons. First, there was much more 
+technology “headroom” for improving performance in the personal 
+computer area, whereas the supercomputers of the late 1980s were pushing 
+the performance envelope. Also, once the supercomputer companies broke 
+through some technical barrier, the microprocessor companies could 
+quickly adopt the successful elements of the supercomputer designs a few 
+short years later. The second and perhaps more important factor was the 
+emergence of a thriving personal and business computer market with ever- 
+increasing performance demands. Computer usage such as 3D graphics, 
+graphical user interfaces, multimedia, and games were the driving factors in 
+this market. With such a large market, available research dollars poured into 
+developing inexpensive high perform…

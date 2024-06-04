@@ -1,0 +1,548 @@
+See discussions, stats, and author profiles for this publication at: https://www.researchgate.net/publication/234826291
+
+Patterns for Parallel Programming
+Book · September 2004
+
+CITATIONS
+
+READS
+
+565
+
+15,494
+
+3 authors, including:
+Tim Mattson
+
+Beverly A. Sanders
+
+Human Learning Group
+
+University of Florida
+
+164 PUBLICATIONS 4,548 CITATIONS
+
+75 PUBLICATIONS 1,650 CITATIONS
+
+SEE PROFILE
+
+All content following this page was uploaded by Tim Mattson on 31 May 2014.
+The user has requested enhancement of the downloaded file.
+
+SEE PROFILE
+
+Patterns for Parallel Programming
+
+Timothy Mattson , Beverly Sanders , Berna Massingill,
+Patterns for parallel programming, Addison-Wesley Professional, 2004
+ISBN-13: 978-0321228116
+© Gethin Williams 2010
+
+Sticking Plaster Pitfall
+
+“Could you just tweak my serial code to
+make it run in parallel?”
+
+© Gethin Williams 2010
+
+Why Bother With This Book?
+●
+
+●
+
+Recipe based
+●
+
+Recipes guide our thinking
+
+●
+
+Help us not to forget
+
+Introduces recurrent themes and terminology
+●
+
+●
+
+e.g. (memory) latency, “loop parallelism”
+
+Emphasises design
+●
+
+Amdahl's law highlights the pitfalls of looking for
+sticking-plaster speed-ups in serial programs –
+design for concurrency
+
+© Gethin Williams 2010
+
+Familiar Mantras ..only more so
+Flexibility
+Environments will be more heterogeneous.
+
+Efficiency
+We're going parallel for a speed-up, right?
+But more pitfalls (latency, thread overheads etc.)
+
+Simplicity
+Parallel codes will be more complicated.
+All the more reason to strive for maintainable,
+understandable programs.
+© Gethin Williams 2010
+
+Four Design Spaces
+Finding Concurrency
+Algorithm Structure
+Supporting Structures
+Implementation Mechanisms
+© Gethin Williams 2010
+
+Finding Concurrency
+Dependency Analysis
+Decomposition
+
+Group Tasks
+
+Task Decomposition
+Order Tasks
+Data Decomposition
+Data Sharing
+
+© Gethin Williams 2010
+
+Design Evaluation
+
+Examples
+●
+
+HPC:
+
+A Climate Model
+
+●
+
+Embedded Systems: A Speech Recogniser
+
+●
+
+The Cloud:
+
+Document Search
+
+Highlights the fact that parallel programming is
+emerging everywhere..
+
+© Gethin Williams 2010
+
+Task vs. Data Decomposition
+
+Decomposition
+Task Decomposition
+
+Data Decomposition
+
+© Gethin Williams 2010
+
+Data Decomposition (trad. HPC):
+A Climate Model
+
+Data Parallel over grid cells
+© Gethin Williams 2010
+
+Task Decomposition (Embedded):
+A Speech Recogniser
+
+Acoustic Analysis: concurrency in stages and components
+Pattern Matching: search over many possible word matches
+© Gethin Williams 2010
+
+Finding Relationships between
+Concurrent Tasks
+Dependency Analysis
+Group Tasks
+
+Order Tasks
+
+Data Sharing
+
+© Gethin Williams 2010
+
+Dependency Analysis
+Pattern Matching
+(speech recognition)
+2
+
+group tasks
+7
+
+5
+
+data sharing:
+● queue of paths
+● legal branches
+● acoustic i/p
+
+9
+
+order tasks: branch..& bound
+0
+
+3
+
+6
+
+match 'cost'
+4
+2
+11
+
+© Gethin Williams 2010
+
+Algorithm Structure
+
+Organise by Tasks
+linear
+Task Parallelism
+recursive
+Divide and Conquer
+
+© Gethin Williams 2010
+
+Organise by Data
+Decomposition
+Geometric linear
+Decomposition
+recursive
+Recursive Data
+
+Organise by Flow
+Of Data
+regular
+Pipeline
+
+Event-Based
+Coordination
+
+irregular
+
+Organise by Tasks Some Considerations
+●
+
+No dependencies between tasks
+●
+
+●
+
+●
+
+massively parallel (vs. embarrassingly serial!)
+
+Dependencies between tasks
+●
+
+Temporal (e.g. speech: real-time constraints)
+
+●
+
+Separable – 'reductions' (we'll see later)
+
+Cost of setting up task vs. amount of work done
+●
+
+See thresholds to switch to serial work
+(we'll see this in e.g. quicksort)
+
+© Gethin Williams 2010
+
+Organise by Tasks Task Parallelism
+Extend & Evaluate
+Partial path
+Partial path
+
+pop
+push
+Partial path
+Partial path
+
+Shared data:
+Queue of partial paths
+Bounding criterion
+•
+
+Partial path
+
+Queue
+Branch & bound implemented with a shared queue
+© Gethin Williams 2010
+
+Organise by Tasks Divide and Conquer
+split
+split
+
+merge
+merge
+e.g. FFT for speech recognition
+Sorting algorithms
+© Gethin Williams 2010
+
+Organise by Data Decomposition Geometric Decomposition
+
+© Gethin Williams 2010
+
+Grid Cells
+
+Organise by Data Decomposition Geometric Decomposition
+cells assigned
+to single
+processor
+
+Exchange local data with neighbours
+© Gethin Williams 2010
+
+Organise by Data Decomposition Geometric Decomposition
+
+© Gethin Williams 2010
+
+Halo exchange
+
+Organise by Data Decomposition Geometric Decomposition
+Benefits of halo exchange:
+1. Can overlap communication &
+computation
+2. Compute scales with volume but
+communication scales with
+surface area
+Q. What's wrong with the number
+of grid cells here?
+Bonus Q. Any issues with the grid
+on a globe? Any solutions?
+
+© Gethin Williams 2010
+
+Pipeline
+
+© Gethin Williams 2010
+
+Pipeline
+time
+stage1
+stage2
+stage3
+
+t1
+
+t2
+
+t3
+
+t4
+
+t1
+
+t2
+
+t3
+
+t4
+
+t1
+
+t2
+
+t3
+
+t4
+
+Speech recognition:
+1. Discrete Fourier Transform (DFT)
+2. manipulation e.g. log
+3. Inverse DFT
+4. Truncate 'Cepstrum' ..
+© Gethin Williams 2010
+
+Event-Based Coordination
+
+Irregular events, ordering constraints (queues can be handy)
+© Gethin Williams 2010
+
+Supporting Structures
+Program Structures
+
+Program Structures
+
+SPMD
+
+Shared Data
+
+Master/Worker
+
+Shared Queue
+
+Loop Parallelism
+
+Distributed Array
+
+Fork/Join
+
+Useful idioms rather than unique implementations
+© Gethin Williams 2010
+
+Single Program Multiple Data
+rank = 0
+
+rank = 1
+
+if(rank == 0) {
+printf(“MASTER\n”);
+}
+else {
+printf(“OTHER\n”);
+}
+
+if(rank == 0) {
+printf(“MASTER\n”);
+}
+else {
+printf(“OTHER\n”);
+}
+
+Only one program to manage
+• Conditionals based on thread or process IDs
+• Load balance predictable (implicit in branching)
+• Plenty of examples and practice when we look at MPI
+•
+
+© Gethin Williams 2010
+
+Master/Worker
+Use when load balance is not predictable..
+..& work cannot be distributed using loops
+●
+
+PEs may have different capabilities
+
+●
+
+A bag of independent tasks is ideal
+
+●
+
+Workers take from bag, process, then take
+another
+Load is automatically balanced in this way
+
+© Gethin Williams 2010
+
+Master/Worker (Cloud):
+MapReduce
+
+Big Data:
+Google Processed 20PB/day in 2008 using MapReduce
+Also used by Yahoo, FaceBook, eBay etc.
+© Gethin Williams 2010
+
+Loop Parallelism
+Use if computational expense is concentrated in
+loops (common in scientific code)
+1. Profile code to find 'hot-spots'
+2. Eliminate dependencies between iterations
+(e.g. private copies & reductions)
+3. Parallelise loops (easy in OpenMP)
+4.Tune the performance, e.g. via scheduling
+We'll get plenty of practice with OpenMP
+© Gethin Williams 2010
+
+Fork/Join
+Use if the number of concurrent tasks varies,
+e.g. if tasks are created recursively
+●
+
+Beware: overhead of creating a new UEs
+(Uinits of Execution, e.g. thread or process)
+●
+
+●
+
+Direct vs. indirect mappings from tasks to Ues
+
+Sorting algos are an examples
+
+© Gethin Williams 2010
+
+Shared Data
+●
+●
+
+Try to avoid, as can limit scalability
+Use a concurrency-controlled (e.g. 'threadsafe') data type:
+●
+●
+
+●
+
+●
+
+One-at-a-time: critical region/'mutex'
+Look for non-interfering operations e.g. readers vs.
+writers
+If pushed, finer grained critical regions, but this will
+increase complexity & hence the chance of a bug
+
+'Shared Queue' is an instance of 'Shared Data'
+© Gethin Williams 2010
+
+Distributed Arrays
+In a nutshell: partition data and distribute so
+that data is close to computation.
+●
+
+Why? Memory access (esp. over a network) is
+slow relative to computation.
+
+●
+
+Simple concept but the devil is in the details
+
+●
+
+Some terminology:
+●
+
+1D block, 2D block and block cyclic distribution
+
+Libraries: e.g. ScaLAPACK
+© Gethin Williams 2010
+
+Recap of Key Points
+Design..
+●
+
+for massively parallel systems
+
+●
+
+because if not today they will be tomorrow
+
+●
+
+and in all areas of computing
+
+Design Patterns..
+●
+
+provide useful – recurring - solutions
+
+●
+
+& structure to the process
+© Gethin Williams 2010
+
+Implementation Mechanisms
+
+OpenMP & Pthreads
+MPI
+OpenCL
+
+© Gethin Williams 2010
+View publication stats
+
+
