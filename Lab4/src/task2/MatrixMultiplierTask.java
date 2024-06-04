@@ -36,9 +36,7 @@ public class MatrixMultiplierTask extends RecursiveTask<Result> {
             }
         } else {
             int midRow = (startRow + endRow) / 2;
-            MatrixMultiplierTask task1 = new MatrixMultiplierTask(A, B, result, startRow, midRow);
-            MatrixMultiplierTask task2 = new MatrixMultiplierTask(A, B, result, midRow, endRow);
-            invokeAll(task1, task2);
+            invokeAll(new MatrixMultiplierTask(A, B, result, startRow, midRow), new MatrixMultiplierTask(A, B, result, midRow, endRow));
         }
 
         return result;

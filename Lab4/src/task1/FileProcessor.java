@@ -12,7 +12,7 @@ public class FileProcessor {
     public static List<String> readFilesFromDirectory(String directoryPath) throws IOException {
         List<Path> filePaths = getFilePaths(directoryPath);
 
-        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        ForkJoinPool forkJoinPool = new ForkJoinPool(6);
         FileReadTask task = new FileReadTask(filePaths);
         return forkJoinPool.invoke(task);
     }

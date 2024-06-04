@@ -1,10 +1,8 @@
 package task4;
 
-
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
-
 
 public class DocumentSearch {
 
